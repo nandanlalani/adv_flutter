@@ -1,0 +1,10 @@
+final String STU_ID = 'id';
+final String STU_FNAME = 'name';
+final String STU_LASTNAME = 'lastname';
+final String STU_ENROLL = 'enrollmentNo';
+final String STU_EMAIL = 'email';
+final String STU_PHONE_NUMBER = 'phoneNumber';
+final String STU_BRANCH = 'branch';
+final String STU_CGPA = 'cgpa';
+final String STU_PRIOR = 'priorEducationCgpa';
+final String STU_IS_D2D = 'isD2D';
