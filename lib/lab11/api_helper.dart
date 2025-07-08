@@ -14,29 +14,4 @@ class ApiService {
       throw Exception('Failed to load data');
     }
   }
-
-  static Future<FlagModel> addFlag(FlagModel flag) async {
-    final res = await http.post(
-      Uri.parse(baseUrl),
-      body: jsonEncode(flag.toJson()),
-      headers: {'Content-Type': 'application/json'},
-    );
-    if (res.statusCode == 201) {
-      return FlagModel.fromJson(jsonDecode(res.body));
-    } else {
-      throw Exception('Failed to add flag');
-    }
-  }
-
-  static Future<void> updateFlag(String id, FlagModel flag) async {
-    await http.put(
-      Uri.parse('$baseUrl/$id'),
-      body: jsonEncode(flag.toJson()),
-      headers: {'Content-Type': 'application/json'},
-    );
-  }
-
-  static Future<void> deleteFlag(String id) async {
-    await http.delete(Uri.parse('$baseUrl/$id'));
-  }
 }

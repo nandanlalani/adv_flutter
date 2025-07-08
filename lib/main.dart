@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           transitionDuration: Duration(milliseconds: 600),
         ),
       ],
-      home: StudentView(),
+      home: FlagView(),
     );
   }
 }

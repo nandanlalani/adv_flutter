@@ -8,59 +8,41 @@ class FlagView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Flags - CRUD')),
+      appBar: AppBar(title: const Text('API List')),
       body: Obx(() {
-        return controller.isLoading.value
-            ? Center(child: CircularProgressIndicator())
-            : Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(12),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: controller.nameController,
-                      decoration: InputDecoration(
-                        labelText: 'Name',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
+        if (controller.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (controller.isError.value) {
+          return const Center(child: Text('Error loading data'));
+        } else {
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: TextField(
+                  controller: controller.searchController,
+                  onChanged: controller.onSearchChanged,
+                  decoration: const InputDecoration(
+                    labelText: 'Search Flags',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.search),
                   ),
-                  SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: controller.addOrUpdateFlag,
-                    child: Text(controller.editingId == null ? 'Add' : 'Update'),
-                  ),
-                ],
+                ),
               ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: controller.flags.length,
-                itemBuilder: (context, index) {
-                  final flag = controller.flags[index];
-                  return ListTile(
-                    title: Text(flag.name),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.edit, color: Colors.blue),
-                          onPressed: () => controller.editFlag(flag),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.delete, color: Colors.red),
-                          onPressed: () => controller.deleteFlag(flag.id),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+              Expanded(
+                child: ListView.builder(
+                  itemCount: controller.filteredFlags.length,
+                  itemBuilder: (context, index) {
+                    final flag = controller.filteredFlags[index];
+                    return ListTile(
+                      title: Text(flag.name),
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
-        );
+            ],
+          );
+        }
       }),
     );
   }

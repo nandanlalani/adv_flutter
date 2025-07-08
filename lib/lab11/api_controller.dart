@@ -5,9 +5,11 @@ import 'api_helper.dart';
 
 class FlagController extends GetxController {
   var flags = <FlagModel>[].obs;
-  var isLoading = false.obs;
-  final nameController = TextEditingController();
-  String? editingId;
+  var isLoading = true.obs;
+  var isError = false.obs;
+  var searchText = ''.obs;
+
+  final searchController = TextEditingController();
 
   @override
   void onInit() {
@@ -16,33 +18,24 @@ class FlagController extends GetxController {
   }
 
   void fetchFlags() async {
+    try {
+      isLoading.value = true;
+      isError.value = false;
       final data = await ApiService.fetchFlags();
       flags.assignAll(data);
+    } catch (e) {
+      isError.value = true;
+    } finally {
+      isLoading.value = false;
+    }
   }
 
-  void addOrUpdateFlag() async {
-    final name = nameController.text.trim();
-      if (editingId == null) {
-        final newFlag = FlagModel(id: '', name: name);
-        final added = await ApiService.addFlag(newFlag);
-        flags.add(added);
-      } else {
-        final updated = FlagModel(id: editingId!, name: name);
-        await ApiService.updateFlag(editingId!, updated);
-        int index = flags.indexWhere((f) => f.id == editingId);
-        if (index != -1) flags[index] = updated;
-        editingId = null;
-      }
-      nameController.clear();
+  List<FlagModel> get filteredFlags {
+    if (searchText.isEmpty) return flags;
+    return flags.where((flag) => flag.name.toLowerCase().contains(searchText.value.toLowerCase())).toList();
   }
 
-  void editFlag(FlagModel flag) {
-    editingId = flag.id;
-    nameController.text = flag.name;
-  }
-
-  void deleteFlag(String id) async {
-      await ApiService.deleteFlag(id);
-      flags.removeWhere((f) => f.id == id);
+  void onSearchChanged(String value) {
+    searchText.value = value;
   }
 }
