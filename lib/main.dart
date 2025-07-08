@@ -1,5 +1,6 @@
 import 'package:adv_flutt/Demo.dart';
 import 'package:adv_flutt/fll_demo.dart';
+import 'package:adv_flutt/lab11/api_view.dart';
 import 'package:adv_flutt/lab4/bottom_sheet_getx/bottom_sheet_view.dart';
 import 'package:adv_flutt/lab4/custom_bottom_sheet/custom_bottom_sheet_view.dart';
 import 'package:adv_flutt/lab4/custom_dialog/custom_dialog_view.dart';
@@ -16,6 +17,7 @@ import 'package:adv_flutt/lab9/stu_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'lab10/crud_db_view.dart';
 import 'lab2/21_user_list_fav/user_list_view.dart';
 import 'lab2/22_signup_form/signup_form_view.dart';
 import 'lab2/e-commerce/ecommerce_view.dart';
@@ -47,7 +49,7 @@ class MyApp extends StatelessWidget {
           transitionDuration: Duration(milliseconds: 600),
         ),
       ],
-      home: StudentListPage(),
+      home: StudentView(),
     );
   }
 }

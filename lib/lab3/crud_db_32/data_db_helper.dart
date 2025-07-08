@@ -13,8 +13,6 @@ class MyDatabase {
           CREATE TABLE TBL_USER(
             uid INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT,
-            city TEXT,
-            gender TEXT
           )
         ''');
     }, onUpgrade: (db, oldVersion, newVersion) {}, version: 1);
